@@ -1,0 +1,35 @@
+FROM python:3.7
+
+USER root
+
+RUN mkdir -p /usr/src/rf && \
+    mkdir -p /usr/src/rf-scripts
+COPY src/env/drivers/Linux/chromedriver /usr/local/bin
+WORKDIR /usr/src/rf
+COPY src/ ./
+
+# RUN chmod 755 "/usr/bin/google-chrome/chromedriver"
+# RUN chmod +x /usr/local/bin/
+RUN chmod a+x /usr/local/bin/chromedriver
+RUN /usr/local/bin/python -m pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# Install Chrome driver and chrome dependencies
+# Notice that xvfb is an in-memory display server for Linux
+RUN apt-get update && \
+    apt-get install -y libnss3 libdbus-1-dev && \
+    apt-get install -y xdg-utils libgbm1 libasound2 fonts-liberation xvfb
+
+# Install google-chrome
+RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+    && dpkg -i google-chrome*.deb \
+    && rm google-chrome*.deb
+
+# (Optional) Start dbus in WSL, see https://github.com/microsoft/WSL/issues/376#issuecomment-295933508
+RUN /etc/init.d/dbus start
+
+ENV CURRENT_PATH=/usr/src/rf/env/
+ENV ENV_DIR=$CURRENT_PATH
+ENV TESTS_DIR=$CURRENT_PATH/../tests/
+ENV TEST_ENV=local
+ENV PATH=/usr/local/bin:$PATH
