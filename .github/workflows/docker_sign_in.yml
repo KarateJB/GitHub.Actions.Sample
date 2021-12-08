@@ -24,9 +24,10 @@ jobs:
       - name: Docker Run
         uses: addnab/docker-run-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME}}
-          password: ${{ secrets.DOCKERHUB_PASSWORD}}
-          image: ${{ secrets.DOCKERHUB_USERNAME}}/${{ secrets.DOCKER_IMAGE_NAME }}:latest
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+          registry: ${{ secrets.ACR_REGISTRY }}
+          image: ${{ secrets.ACR_REGISTRY}}/${{ secrets.DOCKER_IMAGE_NAME }}:latest
           # options:
           run: |
             robot /usr/src/rf/tests/DockerHub/sign_in.robot
