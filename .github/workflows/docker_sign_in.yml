@@ -1,0 +1,32 @@
+---
+name: Docker Sign In
+on:
+  workflow_dispatch:
+    inputs:
+      trigger:
+        description: "The trigger"
+        required: false
+        default: "Postman Monitor"
+      trigger_datetime:
+        description: "The datetime for triggering the workflow"
+        required: true  
+jobs:
+  Sign_In:
+    name: Sign In
+    # env:
+    #   DOCKER_REGISTRY: ${{ secrets.ACR_REGISTRY }} # See https://github.com/actions/runner/issues/480
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Print Environment Variables
+        shell: bash
+        run: |
+          echo "Arguments are ${{ github.event.inputs.trigger }}, ${{ github.event.inputs.trigger_datetime }}"
+      - name: Docker Run
+        uses: addnab/docker-run-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME}}
+          password: ${{ secrets.DOCKERHUB_PASSWORD}}
+          image: ${{ secrets.DOCKERHUB_USERNAME}}/${{ secrets.DOCKER_IMAGE_NAME }}:latest
+          # options:
+          run: |
+            robot /usr/src/rf/tests/DockerHub/sign_in.robot
