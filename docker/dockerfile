@@ -2,8 +2,7 @@ FROM python:3.7
 
 USER root
 
-RUN mkdir -p /usr/src/rf && \
-    mkdir -p /usr/src/rf-scripts
+RUN mkdir -p /usr/src/rf
 COPY src/env/drivers/Linux/chromedriver /usr/local/bin
 WORKDIR /usr/src/rf
 COPY src/ ./
@@ -27,6 +26,7 @@ RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd6
 
 # (Optional) Start dbus in WSL, see https://github.com/microsoft/WSL/issues/376#issuecomment-295933508
 RUN /etc/init.d/dbus start
+
 
 ENV CURRENT_PATH=/usr/src/rf/env/
 ENV ENV_DIR=$CURRENT_PATH

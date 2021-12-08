@@ -14,11 +14,14 @@ jobs:
         shell: bash
         run: |
           echo "Checkout path = $GITHUB_WORKSPACE"
-          cd "$GITHUB_WORKSPACE"
-          touch src/env/local/credentials.robot
+          cd "$GITHUB_WORKSPACE/src/env/local"
+          pwd
+          touch credentials.robot
           echo "*** Variables ***" > credentials.robot
           echo "\${ID}    ${{ secrets.DOCKERHUB_USERNAME }}" >> credentials.robot
-          echo "\${PWD}    ${{ secrets.DOCKERHU_PASSWORD }}" >> credentials.robot
+          echo "\${PWD}    ${{ secrets.DOCKERHUB_PASSWORD }}" >> credentials.robot
+          ls -al
+          cat credentials.robot
       - name: Login to ACR
         uses: azure/docker-login@v1
         with:
@@ -29,7 +32,7 @@ jobs:
         id: build_publish
         uses: docker/build-push-action@v2
         with:
-          # context: .
+          context: .
           file: ./docker/dockerfile
           push: true
           tags: ${{ secrets.ACR_REGISTRY}}/${{ secrets.DOCKER_IMAGE_NAME }}:latest
