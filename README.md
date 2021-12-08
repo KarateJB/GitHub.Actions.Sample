@@ -51,7 +51,7 @@ $ docker run -it --rm --shm-size=2gb karatejb/robot-sample sh
 Or
 
 ```s
-$ docker run -it --rm --shm-size=2gb -v C:\Users\ppipp\Documents\JB\Works\SourceControl\GitHub\KarateJB\Bank.Automation\src:/usr/src/rf karatejbacr.azurecr.io/robot-bank sh
+$ docker run -it --rm --shm-size=2gb -v C:\Users\ppipp\Documents\JB\Works\SourceControl\GitHub\KarateJB\Bank.Automation\src:/usr/src/rf karatejbacr.azurecr.io/robot-sample sh
 ```
 
 
@@ -66,6 +66,6 @@ $ robot clock_out.robot
 or
 
 ```s
-$ docker run -it --rm --shm-size=2gb karatejbacr.azurecr.io/robot-bank robot /usr/src/rf/tests/ClockInOut/clock_in.robot
-$ docker run -it --rm --shm-size=2gb karatejbacr.azurecr.io/robot-bank robot /usr/src/rf/tests/ClockInOut/clock_out.robot
+$ docker run -it --rm --shm-size=2gb karatejbacr.azurecr.io/robot-sample robot /usr/src/rf/tests/ClockInOut/clock_in.robot
+$ docker run -it --rm --shm-size=2gb karatejbacr.azurecr.io/robot-sample robot /usr/src/rf/tests/ClockInOut/clock_out.robot
 ```
