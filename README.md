@@ -37,35 +37,7 @@ $ echo "\${PWD}    xxxxxx" >> credentials.robot
 
 ## Run on Docker
 
-### Build Docker Image
-
 ```s
-$ docker build --no-cache -t karatejb/robot-sample -f ./docker/dockerfile .
-$ docker push karatejb/robot-sample
-```
-
-```s
-$ docker run -it --rm --shm-size=2gb karatejb/robot-sample sh
-```
-
-Or
-
-```s
-$ docker run -it --rm --shm-size=2gb -v C:\Users\ppipp\Documents\JB\Works\SourceControl\GitHub\KarateJB\Bank.Automation\src:/usr/src/rf karatejbacr.azurecr.io/robot-sample sh
-```
-
-
-To run tests...
-
-```s
-$ cd /usr/src/rf/tests
-$ cd ClockInOut
-$ robot clock_in.robot
-$ robot clock_out.robot
-```
-or
-
-```s
-$ docker run -it --rm --shm-size=2gb karatejbacr.azurecr.io/robot-sample robot /usr/src/rf/tests/ClockInOut/clock_in.robot
-$ docker run -it --rm --shm-size=2gb karatejbacr.azurecr.io/robot-sample robot /usr/src/rf/tests/ClockInOut/clock_out.robot
+$ docker build --no-cache -t robot-sample -f ./docker/dockerfile .
+$ docker run -it --rm --shm-size=2gb robot-sample:latest sh
 ```
