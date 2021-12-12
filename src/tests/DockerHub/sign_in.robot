@@ -5,7 +5,7 @@ Library       ChromeConfiguration.py
 Library       XvfbRobot
 Force Tags    clockin
 Resource      %{ENV_DIR}/%{TEST_ENV}/env_settings.robot
-Resource      resources/vars.resource
+# Resource      resources/vars.resource
 
 *** Variables ***
 ${BROWSER}   chrome  # See https://robotframework.org/SeleniumLibrary/SeleniumLibrary.html#Open%20Browser
@@ -14,8 +14,10 @@ ${SELSPEED}  0.0s
 
 *** Test Cases ***
 Sign In
-    # [Setup]  Run Keywords  Open Browser  ${HR_HOST}  ${BROWSER}
-    # ...              AND   Set Selenium Speed  ${SELSPEED}
+    ${ID}    Get Environment Variable   DOCKERHUB_ID
+    ${PWD}    Get Environment Variable   DOCKERHUB_PWD
+    # Log To Console    DockerHub ID is ${DOCKERHUB_ID}
+    # Log To Console    DockerHub PWD is ${DOCKERHUB_PWD}
     Set Environment Variable    webdriver.chrome.driver    /usr/local/bin/chromedriver
     ${chrome_options}    ChromeConfiguration.Config
     ${args}    ChromeConfiguration.Serviceargs
@@ -26,8 +28,8 @@ Sign In
     click    id=log_in
     Wait Until Element Is Visible    id=nw_username    30
     Capture Page Screenshot
-    type    id=nw_username    ${LOGIN_ID}
-    type    id=nw_password    ${LOGIN_PWD}
+    type    id=nw_username    ${ID}
+    type    id=nw_password    ${PWD}
     # submit    css=._26tiYHbQ518oVwdTK3a4ol
     click    id=nw_submit
     Wait Until Element Is Visible    id=homeButton    10

@@ -28,6 +28,8 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
           registry: ${{ secrets.ACR_REGISTRY }}
           image: ${{ secrets.ACR_REGISTRY}}/${{ secrets.DOCKER_IMAGE_NAME }}:latest
-          # options:
+          options: |
+            -e DOCKERHUB_ID=${{ secrets.DOCKERHUB_USERNAME }}
+            -e DOCKERHUB_PWD=${{ secrets.DOCKERHUB_PASSWORD }}
           run: |
             robot /usr/src/rf/tests/DockerHub/sign_in.robot
