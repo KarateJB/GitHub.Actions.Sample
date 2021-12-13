@@ -24,10 +24,10 @@ jobs:
       - name: Docker Run
         uses: addnab/docker-run-action@v3
         with:
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
-          registry: ${{ secrets.ACR_REGISTRY }}
-          image: ${{ secrets.ACR_REGISTRY}}/${{ secrets.DOCKER_IMAGE_NAME }}:latest
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          # registry: ${{ secrets.ACR_REGISTRY }}
+          image: ${{ secrets.DOCKERHUB_USERNAME}}/${{ secrets.DOCKER_IMAGE_NAME }}:latest
           options: |
             -e DOCKERHUB_ID=${{ secrets.DOCKERHUB_USERNAME }}
             -e DOCKERHUB_PWD=${{ secrets.DOCKERHUB_PASSWORD }}

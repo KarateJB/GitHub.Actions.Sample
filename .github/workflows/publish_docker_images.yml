@@ -10,29 +10,28 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Create credential file
-        shell: bash
-        run: |
-          echo "Checkout path = $GITHUB_WORKSPACE"
-          cd "$GITHUB_WORKSPACE/src/env/local"
-          pwd
-          touch credentials.robot
-          echo "*** Variables ***" > credentials.robot
-          echo "\${ID}    ${{ secrets.DOCKERHUB_USERNAME }}" >> credentials.robot
-          echo "\${PWD}    ${{ secrets.DOCKERHUB_PASSWORD }}" >> credentials.robot
-          ls -al
-          cat credentials.robot
-      - name: Login to ACR
-        uses: azure/docker-login@v1
+      # - name: Create credential file
+      #   shell: bash
+      #   run: |
+      #     echo "Checkout path = $GITHUB_WORKSPACE"
+      #     cd "$GITHUB_WORKSPACE/src/env/local"
+      #     pwd
+      #     touch credentials.robot
+      #     echo "*** Variables ***" > credentials.robot
+      #     echo "\${ID}    ${{ secrets.DOCKERHUB_USERNAME }}" >> credentials.robot
+      #     echo "\${PWD}    ${{ secrets.DOCKERHUB_PASSWORD }}" >> credentials.robot
+      #     ls -al
+      #     cat credentials.robot
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
         with:
-          login-server: ${{ secrets.ACR_REGISTRY }}
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
-      - name: Build and push
-        id: build_publish
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Build and push image
+        id: build_publish_image
         uses: docker/build-push-action@v2
         with:
-          context: . # Use Path Context for not checking out git repository again and overwrite the one from previous step.
+          context: .
           file: ./docker/dockerfile
           push: true
-          tags: ${{ secrets.ACR_REGISTRY}}/${{ secrets.DOCKER_IMAGE_NAME }}:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME}}/${{ secrets.DOCKER_IMAGE_NAME }}:latest
