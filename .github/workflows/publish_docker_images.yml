@@ -1,11 +1,12 @@
 ---
 name: Publish Docker images to Docker Hub
 on:
-  push:
-      branches: [ master ] # Set which branch to trigger this flow, e.q. [ master, develop ]
+  workflow_dispatch:
+  # push:
+  #     branches: [ master ] # Set which branch to trigger this flow, e.q. [ master, develop ]
 jobs:
   push_images_to_dockerhub:
-    name: Push images to ACR
+    name: Push images to dockerhub
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout repo
